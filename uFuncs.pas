@@ -14,7 +14,78 @@ type
   function IsWin64: Boolean;
   procedure  WBLoadHTML(WebBrowser:  TWebBrowser;  HTMLCode:  tstrings);
   function CheckImageType(FileName: string): TImageType;
+  function cryptfile(const filename: string):boolean;
+  function ismp4(FileName: string): boolean;
 implementation
+
+function cryptfile(const filename: string):boolean;
+const
+  MAX_BUF=1024;
+  XOR_KEY:byte=10;
+var
+ hFile:THandle;
+ hMap:THandle;
+ p:pbyte;
+ filesize,bufsize,i:integer;
+begin
+  result:=false;
+try
+  hFile := CreateFile(PChar(filename),GENERIC_READ or GENERIC_WRITE,FILE_SHARE_READ,nil,OPEN_EXISTING,FILE_ATTRIBUTE_NORMAL,0);
+  if hFile = INVALID_HANDLE_VALUE then Exit;
+  filesize := GetFileSize(hFile,nil);
+  if(filesize=0)then exit;
+  if filesize>MAX_BUF then bufsize:=MAX_BUF else bufsize:=filesize;
+
+  //创建映射
+  hMap := CreateFileMapping(hFile,nil,PAGE_READWRITE,0,0,nil);
+  if hMap = 0 then Exit;
+  p:= PBYTE(MapViewOfFile(hMap,FILE_MAP_ALL_ACCESS,0,0,bufsize));
+  if p=nil then exit;
+  for i := 0 to bufsize-1 do
+  begin
+    p^:=p^ xor  XOR_KEY;
+    inc(p);
+  end;
+  UnmapViewOfFile(p);
+  result:=true;
+finally
+  CloseHandle(hMap);
+  CloseHandle(hFile);
+end;
+end;
+
+
+{-------------------------------------------------------------------------------
+过程名:    ismp4 mp4判断
+参数:      FileName:  string;  1.文件名
+返回值:    boolean;是否是mp4
+-------------------------------------------------------------------------------}
+function ismp4(FileName: string): boolean;
+const
+  MP4_ID_1:ansiString='ftypisom';
+  MP4_ID_2:ansiString='ftypmp4';
+var
+  ms: TMemoryStream;
+  buf: array[0..7] of ansiChar;
+  ftyp:ansiString;
+begin
+  result:=false;
+  ms := TMemoryStream.Create;
+  try
+    ms.LoadFromFile(FileName);
+    if(ms.Size=0)then exit;
+    ms.Position := 4;
+    ms.ReadBuffer(buf,8);
+    ftyp:=buf;
+    if(pos(MP4_ID_1,ftyp)>0)or(pos(MP4_ID_1,ftyp)>0)then
+    begin
+      result:=true;
+      exit;
+    end;
+  finally
+    ms.Free;
+  end;
+end;
 
 {-------------------------------------------------------------------------------
 过程名:    CheckImageType 图片判断

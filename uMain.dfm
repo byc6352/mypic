@@ -2157,6 +2157,7 @@ object fMain: TfMain
     Height = 31
     Align = alTop
     TabOrder = 1
+    ExplicitTop = -6
     object btnOpen: TButton
       Tag = 4
       Left = 7
@@ -2184,6 +2185,16 @@ object fMain: TfMain
       Height = 21
       TabOrder = 2
     end
+    object btnDecrypt: TButton
+      Tag = 4
+      Left = 617
+      Top = 0
+      Width = 75
+      Height = 25
+      Caption = 'test'
+      TabOrder = 3
+      OnClick = btnDecryptClick
+    end
   end
   object Page1: TPageControl
     Left = 203
@@ -2196,10 +2207,6 @@ object fMain: TfMain
     object tspic: TTabSheet
       Caption = #22270#29255
       TabVisible = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
       object Image1: TImage
         Left = 0
         Top = 0
@@ -2291,16 +2298,25 @@ object fMain: TfMain
       Caption = #25991#26412
       ImageIndex = 2
       TabVisible = False
-      ExplicitLeft = 0
-      ExplicitTop = 0
-      ExplicitWidth = 0
-      ExplicitHeight = 0
-      object Memo1: TMemo
+      object Memoplayer: TMemo
         Left = 0
         Top = 0
         Width = 655
         Height = 525
-        Align = alClient
+        Lines.Strings = (
+          
+            '<object CLASSID="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" wid' +
+            'th="320" height="256" CODEBASE="http://www.apple.com/qtactivex/q' +
+            'tplugin.cab">'
+          '    <param name="src" value="1.mp4">'
+          '    <param name="autoplay" value="true">'
+          '    <param name="loop" value="true">'
+          '    <param name="controller" value="true">'
+          
+            '    <embed src="1.mp4" width="320" height="256" autoplay="true" ' +
+            'loop="true" controller="true" pluginspage="http://www.apple.com/' +
+            'quicktime/"></embed>'
+          '    </object>')
         ScrollBars = ssBoth
         TabOrder = 0
       end
@@ -2313,7 +2329,20 @@ object fMain: TfMain
     Height = 553
     Align = alLeft
     ItemHeight = 13
+    PopupMenu = popListFile
     TabOrder = 3
     OnClick = ListFileClick
+  end
+  object popListFile: TPopupMenu
+    Left = 424
+    Top = 304
+    object N1: TMenuItem
+      Caption = #25991#20214#25152#22312#20301#32622
+      OnClick = N1Click
+    end
+    object N2: TMenuItem
+      Caption = #25171#24320#26041#24335
+      OnClick = N2Click
+    end
   end
 end

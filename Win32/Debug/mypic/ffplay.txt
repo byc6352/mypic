@@ -1,0 +1,176 @@
+FFplay使用指南
+转载
+Tianyu-liu 最后发布于2015-03-12 15:24:46 阅读数 35627 
+
+收藏 
+展开 
+1. ffplay 是什么？
+简单的说，ffplay 是一个使用了 ffmpeg 和 sdl 库的、一个简单的可移植的媒体播放器。
+2. ffplay 使用方式
+命令行： ffplay [选项] ['输入文件']
+3. ffplay 可使用的选项
+3.1 通用选项
+view source
+print
+?
+01.
+'-L'    显示 license
+02.
+'-h, -?, -help, --help [arg]' 打印帮助信息；可以指定一个参数 arg ，如果不指定，只打印基本选项
+03.
+可选的 arg 选项：
+04.
+'long'    除基本选项外，还将打印高级选项
+05.
+'full'    打印一个完整的选项列表，包含 encoders, decoders, demuxers, muxers, filters 等的共享以及私有选项
+06.
+'decoder=decoder_name'    打印名称为 "decoder_name" 的解码器的详细信息
+07.
+'encoder=encoder_name'    打印名称为 "encoder_name" 的编码器的详细信息
+08.
+'demuxer=demuxer_name'    打印名称为 "demuxer_name" 的 demuxer 的详细信息
+09.
+'muxer=muxer_name'        打印名称为 "muxer_name" 的 muxer 的详细信息
+10.
+'filter=filter_name'      打印名称为 "filter_name" 的过滤器的详细信息
+11.
+ 
+12.
+'-version'     显示版本信息
+13.
+'-formats'     显示有效的格式
+14.
+'-codecs'      显示 libavcodec 已知的所有编解码器
+15.
+'-decoders'    显示有效的解码器
+16.
+'-encoders'    显示有效的编码器
+17.
+'-bsfs'        显示有效的比特流过滤器
+18.
+'-protocols'   显示有效的协议
+19.
+'-filters'     显示 libavfilter 有效的过滤器
+20.
+'-pix_fmts'    显示有效的像素格式
+21.
+'-sample_fmts' 显示有效的采样格式
+22.
+'-layouts'     显示通道名称以及标准通道布局
+23.
+'-colors'      显示认可的颜色名称
+24.
+'-hide_banner' 禁止打印欢迎语；也就是禁止默认会显示的版权信息、编译选项以及库版本信息等
+3.2 一些主要选项
+view source
+print
+?
+01.
+'-x width'        强制以 "width" 宽度显示
+02.
+'-y height'       强制以 "height" 高度显示
+03.
+'-an'             禁止音频
+04.
+'-vn'             禁止视频
+05.
+'-ss pos'         跳转到指定的位置(秒)
+06.
+'-t duration'     播放 "duration" 秒音/视频
+07.
+'-bytes'          按字节跳转
+08.
+'-nodisp'         禁止图像显示(只输出音频)
+09.
+'-f fmt'          强制使用 "fmt" 格式
+10.
+'-window_title title'  设置窗口标题(默认为输入文件名)
+11.
+'-loop number'    循环播放 "number" 次(0将一直循环)
+12.
+'-showmode mode'  设置显示模式
+13.
+可选的 mode ：
+14.
+'0, video'    显示视频
+15.
+'1, waves'    显示音频波形
+16.
+'2, rdft'     显示音频频带
+17.
+默认值为 'video'，你可以在播放进行时，按 "w" 键在这几种模式间切换
+18.
+ 
+19.
+'-i input_file'   指定输入文件
+3.3 一些高级选项
+view source
+print
+?
+1.
+'-sync type'          设置主时钟为音频、视频、或者外部。默认为音频。主时钟用来进行音视频同步
+2.
+'-threads count'      设置线程个数
+3.
+'-autoexit'           播放完成后自动退出
+4.
+'-exitonkeydown'      任意键按下时退出
+5.
+'-exitonmousedown'    任意鼠标按键按下时退出
+6.
+'-acodec codec_name'  强制指定音频解码器为 "codec_name"
+7.
+'-vcodec codec_name'  强制指定视频解码器为 "codec_name"
+8.
+'-scodec codec_name'  强制指定字幕解码器为 "codec_name"
+3.4 一些快捷键
+view source
+print
+?
+01.
+'q, ESC'            退出
+02.
+'f'                 全屏
+03.
+'p, SPC'            暂停
+04.
+'w'                 切换显示模式(视频/音频波形/音频频带)
+05.
+'s'                 步进到下一帧
+06.
+'left/right'        快退/快进 10 秒
+07.
+'down/up'           快退/快进 1 分钟
+08.
+'page down/page up' 跳转到前一章/下一章(如果没有章节，快退/快进 10 分钟)
+09.
+'mouse click'       跳转到鼠标点击的位置(根据鼠标在显示窗口点击的位置计算百分比)
+4. ffplay 使用示例
+view source
+print
+?
+01.
+1) 播放 test.mp4 ，播放完成后自动退出
+02.
+ffplay -autoexit test.mp4
+03.
+ 
+04.
+2) 以 320 x 240 的大小播放 test.mp4
+05.
+ffplay -x 320 -y 240 test.mp4
+06.
+ 
+07.
+3) 将窗口标题设置为 "myplayer"，循环播放 2 次
+08.
+ffplay -window_title myplayer -loop 2 test.mp4
+09.
+ 
+10.
+4) 播放 双通道 32K 的 PCM 音频数据
+11.
+ffplay -f s16le -ar 32000 -ac 2 test.pcm
+更多 ffplay 可用选项，可以使用 ffplay -h 获取
+
+http://www.it165.net/os/html/201404/7818.html

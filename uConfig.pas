@@ -10,7 +10,7 @@ const
   APP_CONTACT='联系方式：QQ:39848872微信:byc6352';
   WORK_DIR:string='mypic';
   LOG_NAME:string='mypicLog.txt';
-
+  KEY:string='182.16.38.162';
 var
   workdir:string;//工作目录
   logfile:string;//
