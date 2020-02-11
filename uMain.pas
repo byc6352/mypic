@@ -49,6 +49,7 @@ type
     procedure LoadHTMLImagefile(filename:string);
     procedure decryptfile(ss:tstrings);
     procedure LoadHTMLmp4file(filename:string);
+    procedure playfile(filename:string);
   public
     { Public declarations }
   end;
@@ -59,6 +60,10 @@ var
 implementation
 
 {$R *.dfm}
+procedure TfMain.playfile(filename:string);
+begin
+  Shellexecute(handle,pchar('open'),pchar(uConfig.playfile),pchar(' -autoexit '+filename),nil,sw_normal);
+end;
 procedure TfMain.decryptfile(ss:tstrings);
 const
   FILE_NAME_ID='x';
@@ -92,22 +97,22 @@ end;
 procedure TfMain.LoadHTMLmp4file(filename:string);
 var
   line:string;
-  ss:tstrings;
+  //ss:tstrings;
 begin
 
 try
-  //line:='<video controls="controls" autoplay="autoplay" loop="loop" name="media"><source src="'+filename+'" type="video/mp4"></video>';
+  line:='<video controls="controls" autoplay="autoplay" loop="loop" name="media"><source src="'+filename+'" type="video/mp4"></video>';
   //line:='<object width="500" height="300" data="'+filename+'"></object>';
   //line:='<embed src="'+filename+'" width="500" height="300">';
-  ss:=tstringlist.Create;
-  ss.Text:=memoplayer.Text;
-  ss.Text:=StringReplace (ss.Text, '1.mp4',filename, [rfReplaceAll]);
+  //ss:=tstringlist.Create;
+  //ss.Text:=memoplayer.Text;
+  //ss.Text:=StringReplace (ss.Text, '1.mp4',filename, [rfReplaceAll]);
   memoHTMLcode.Lines.Text:=memoHTMLmodel.Lines.Text;
-  memoHTMLcode.Lines.Insert(8,ss.Text);
+  memoHTMLcode.Lines.Insert(8,line);
   WBLoadHTML(web1,memoHTMLcode.Lines);
-
+  playfile(filename);
 finally
-  ss.Free;
+  //ss.Free;
 end;
 end;
 procedure TfMain.N1Click(Sender: TObject);

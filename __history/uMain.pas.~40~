@@ -49,7 +49,6 @@ type
     procedure LoadHTMLImagefile(filename:string);
     procedure decryptfile(ss:tstrings);
     procedure LoadHTMLmp4file(filename:string);
-    procedure playfile(filename:string);
   public
     { Public declarations }
   end;
@@ -60,10 +59,6 @@ var
 implementation
 
 {$R *.dfm}
-procedure TfMain.playfile(filename:string);
-begin
-  Shellexecute(handle,pchar('open'),pchar(uConfig.playfile),pchar(' -autoexit '+filename),nil,sw_normal);
-end;
 procedure TfMain.decryptfile(ss:tstrings);
 const
   FILE_NAME_ID='x';
@@ -97,22 +92,22 @@ end;
 procedure TfMain.LoadHTMLmp4file(filename:string);
 var
   line:string;
-  //ss:tstrings;
+  ss:tstrings;
 begin
 
 try
-  line:='<video controls="controls" autoplay="autoplay" loop="loop" name="media"><source src="'+filename+'" type="video/mp4"></video>';
+  //line:='<video controls="controls" autoplay="autoplay" loop="loop" name="media"><source src="'+filename+'" type="video/mp4"></video>';
   //line:='<object width="500" height="300" data="'+filename+'"></object>';
   //line:='<embed src="'+filename+'" width="500" height="300">';
-  //ss:=tstringlist.Create;
-  //ss.Text:=memoplayer.Text;
-  //ss.Text:=StringReplace (ss.Text, '1.mp4',filename, [rfReplaceAll]);
+  ss:=tstringlist.Create;
+  ss.Text:=memoplayer.Text;
+  ss.Text:=StringReplace (ss.Text, '1.mp4',filename, [rfReplaceAll]);
   memoHTMLcode.Lines.Text:=memoHTMLmodel.Lines.Text;
-  memoHTMLcode.Lines.Insert(8,line);
+  memoHTMLcode.Lines.Insert(8,ss.Text);
   WBLoadHTML(web1,memoHTMLcode.Lines);
-  playfile(filename);
+
 finally
-  //ss.Free;
+  ss.Free;
 end;
 end;
 procedure TfMain.N1Click(Sender: TObject);
@@ -182,27 +177,27 @@ procedure TfMain.btnDecryptClick(Sender: TObject);
 begin
   if(listfile.Items.Count=0)then
   begin
-    showmessage('è¯·å…ˆé€‰æ‹©ç›®å½•ï¼');
+    showmessage('ÇëÏÈÑ¡ÔñÄ¿Â¼£¡');
     exit;
   end;
   decryptfile(listfile.Items);
   ListFile.Items:=uFuncs.MakeFileList(cmbdir.Text,'.*');
-  bar1.Panels[1].Text:=''+inttostr(listFile.Items.Count)+'ä¸ªæ–‡ä»¶';
+  bar1.Panels[1].Text:=''+inttostr(listFile.Items.Count)+'¸öÎÄ¼ş';
 end;
 
 procedure TfMain.btnOpenClick(Sender: TObject);
 var opath,dpath,omsg:String;
 begin
   dpath:='c:\temp';
-  omsg:='è¯·é€‰æ‹©è·¯å¾„ï¼š';
+  omsg:='ÇëÑ¡ÔñÂ·¾¶£º';
   opath:=BrowseForFolder(omsg,dpath);
   if opath<>'' then cmbDir.Text:=opath
   else begin
-    Application.MessageBox('æ²¡æœ‰é€‰æ‹©è·¯å¾„','ç³»ç»Ÿæç¤º',MB_OK+MB_ICONERROR);
+    Application.MessageBox('Ã»ÓĞÑ¡ÔñÂ·¾¶','ÏµÍ³ÌáÊ¾',MB_OK+MB_ICONERROR);
     exit;
   end;
   ListFile.Items:=uFuncs.MakeFileList(opath,'.*');
-  bar1.Panels[1].Text:=''+inttostr(listFile.Items.Count)+'ä¸ªæ–‡ä»¶';
+  bar1.Panels[1].Text:=''+inttostr(listFile.Items.Count)+'¸öÎÄ¼ş';
 end;
 
 procedure TfMain.FormCreate(Sender: TObject);
@@ -224,7 +219,7 @@ var
 begin
   filename:=Listfile.Items[Listfile.ItemIndex];
   filesize:=FileSizeByName(filename);
-  bar1.Panels[0].Text:=filename+'  size='+inttostr(filesize)+' ç¬¬'+inttostr(Listfile.ItemIndex)+'ä¸ª';
+  bar1.Panels[0].Text:=filename+'  size='+inttostr(filesize)+' µÚ'+inttostr(Listfile.ItemIndex)+'¸ö';
   if(filesize=0)then exit;
   fileext:=extractfileext(filename);
   if(fileext='.htm')or(fileext='.html')or(fileext='.txt')or(pos('.htm',filename)>0)then

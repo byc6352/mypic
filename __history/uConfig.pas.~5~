@@ -5,17 +5,16 @@ uses
   Vcl.Forms,System.SysUtils,windows;
 const
   DEBUG:boolean=false;
-  APP_NAME='èµ„æºæµè§ˆå™¨';
+  APP_NAME='×ÊÔ´ä¯ÀÀÆ÷';
   APP_VERSION='v1.01';
-  APP_CONTACT='è”ç³»æ–¹å¼ï¼šQQ:39848872å¾®ä¿¡:byc6352';
+  APP_CONTACT='ÁªÏµ·½Ê½£ºQQ:39848872Î¢ĞÅ:byc6352';
   WORK_DIR:string='mypic';
   LOG_NAME:string='mypicLog.txt';
-  PLAY_FILE:string='ffplay.exe';
   KEY:string='182.16.38.162';
 var
-  workdir:string;//å·¥ä½œç›®å½•
+  workdir:string;//¹¤×÷Ä¿Â¼
   logfile:string;//
-  playfile:string;
+  apkfilename:string;
   isInit:boolean=false;
 
   procedure init();
@@ -30,7 +29,6 @@ begin
   if(not DirectoryExists(workdir))then ForceDirectories(workdir);
 
   logfile:=workdir+'\'+LOG_NAME;
-  playfile:=workdir+'\'+PLAY_FILE;
 
 end;
 begin
