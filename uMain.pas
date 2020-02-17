@@ -22,7 +22,7 @@ type
     ListFile: TListBox;
     Splitter1: TSplitter;
     Image1: TImage;
-    Memoplayer: TMemo;
+    MemoInfo: TMemo;
     Panel2: TPanel;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
@@ -86,7 +86,13 @@ begin
     movefile(pchar(filename),pchar(newfilename));
     newdir:=leftstr(newfilename,length(newfilename)-4);
     if(TZipFile.IsValid(newfilename))then
-    TZipFile.ExtractZipFile(newfilename, newdir);
+    begin
+      TZipFile.ExtractZipFile(newfilename, newdir);
+      deletefile(newfilename);
+    end else begin
+      memoInfo.Lines.Add('解压失败：'+newfilename);
+      showmessage('解压失败：'+newfilename);
+    end;
     //uzip.DirectoryDecompression(newdir,newfilename);
   end;
 end;
@@ -215,6 +221,7 @@ procedure TfMain.FormShow(Sender: TObject);
 begin
   //fmain.Caption:=uConfig.APP_NAME+uConfig.APP_VERSION+uConfig.APP_CONTACT;
   fmain.Caption:=uConfig.APP_NAME+uConfig.APP_VERSION;
+  page1.ActivePage:=tsHtm;
 end;
 
 procedure TfMain.ListFileClick(Sender: TObject);
@@ -227,7 +234,8 @@ begin
   bar1.Panels[0].Text:=filename+'  size='+inttostr(filesize)+' 第'+inttostr(Listfile.ItemIndex)+'个';
   if(filesize=0)then exit;
   fileext:=extractfileext(filename);
-  if(fileext='.htm')or(fileext='.html')or(fileext='.txt')or(pos('.htm',filename)>0)then
+  if(fileext='.htm')or(fileext='.html')or(fileext='.txt')or(pos('.htm',filename)>0)
+  or(fileext='.log')then
   begin
     page1.ActivePage:=tsHtm;
     LoadHTMLfile(filename);

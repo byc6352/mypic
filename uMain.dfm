@@ -2157,7 +2157,6 @@ object fMain: TfMain
     Height = 31
     Align = alTop
     TabOrder = 1
-    ExplicitTop = -6
     object btnOpen: TButton
       Tag = 4
       Left = 7
@@ -2204,6 +2203,7 @@ object fMain: TfMain
     ActivePage = tsHtm
     Align = alClient
     TabOrder = 2
+    ExplicitLeft = 206
     object tspic: TTabSheet
       Caption = #22270#29255
       TabVisible = False
@@ -2284,7 +2284,7 @@ object fMain: TfMain
         Align = alClient
         TabOrder = 1
         OnNavigateComplete2 = Web1NavigateComplete2
-        ExplicitLeft = -1
+        ExplicitLeft = 3
         ExplicitTop = 1
         ControlData = {
           4C000000B2430000DC2600000000000000000000000000000000000000000000
@@ -2297,10 +2297,9 @@ object fMain: TfMain
     object tsText: TTabSheet
       Caption = #25991#26412
       ImageIndex = 2
-      TabVisible = False
-      object Memoplayer: TMemo
-        Left = 0
-        Top = 0
+      object MemoInfo: TMemo
+        Left = 2
+        Top = -2
         Width = 655
         Height = 525
         Lines.Strings = (
