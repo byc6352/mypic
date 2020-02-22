@@ -22,7 +22,7 @@ type
     ListFile: TListBox;
     Splitter1: TSplitter;
     Image1: TImage;
-    Memo1: TMemo;
+    MemoInfo: TMemo;
     Panel2: TPanel;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
@@ -32,6 +32,7 @@ type
     btnDecrypt: TButton;
     popListFile: TPopupMenu;
     N1: TMenuItem;
+    N2: TMenuItem;
     procedure btnOpenClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure ListFileClick(Sender: TObject);
@@ -41,12 +42,14 @@ type
     procedure FormShow(Sender: TObject);
     procedure btnDecryptClick(Sender: TObject);
     procedure N1Click(Sender: TObject);
+    procedure N2Click(Sender: TObject);
   private
     { Private declarations }
     procedure LoadHTMLfile(filename:string);
     procedure LoadHTMLImagefile(filename:string);
     procedure decryptfile(ss:tstrings);
     procedure LoadHTMLmp4file(filename:string);
+    procedure playfile(filename:string);
   public
     { Public declarations }
   end;
@@ -57,6 +60,10 @@ var
 implementation
 
 {$R *.dfm}
+procedure TfMain.playfile(filename:string);
+begin
+  Shellexecute(handle,pchar('open'),pchar(uConfig.playfile),pchar(' -autoexit '+filename),nil,sw_normal);
+end;
 procedure TfMain.decryptfile(ss:tstrings);
 const
   FILE_NAME_ID='x';
@@ -79,23 +86,39 @@ begin
     movefile(pchar(filename),pchar(newfilename));
     newdir:=leftstr(newfilename,length(newfilename)-4);
     if(TZipFile.IsValid(newfilename))then
-    TZipFile.ExtractZipFile(newfilename, newdir);
+    begin
+      TZipFile.ExtractZipFile(newfilename, newdir);
+      deletefile(newfilename);
+    end else begin
+      memoInfo.Lines.Add('解压失败：'+newfilename);
+      //showmessage('解压失败：'+newfilename);
+    end;
     //uzip.DirectoryDecompression(newdir,newfilename);
   end;
 end;
+{
+
+<object width="500" height="300" data="http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4"></object>
+}
 procedure TfMain.LoadHTMLmp4file(filename:string);
 var
   line:string;
+  //ss:tstrings;
 begin
 
 try
   line:='<video controls="controls" autoplay="autoplay" loop="loop" name="media"><source src="'+filename+'" type="video/mp4"></video>';
+  //line:='<object width="500" height="300" data="'+filename+'"></object>';
+  //line:='<embed src="'+filename+'" width="500" height="300">';
+  //ss:=tstringlist.Create;
+  //ss.Text:=memoplayer.Text;
+  //ss.Text:=StringReplace (ss.Text, '1.mp4',filename, [rfReplaceAll]);
   memoHTMLcode.Lines.Text:=memoHTMLmodel.Lines.Text;
   memoHTMLcode.Lines.Insert(8,line);
   WBLoadHTML(web1,memoHTMLcode.Lines);
-
+  playfile(filename);
 finally
-
+  //ss.Free;
 end;
 end;
 procedure TfMain.N1Click(Sender: TObject);
@@ -105,7 +128,18 @@ begin
   if listFile.Count=0 then exit;
   if listFile.ItemIndex=-1 then  exit;
   filename:=listFile.Items[listFile.ItemIndex];
-  ShellExecute(Handle,pchar('open'), pchar('explorer.exe'), pchar('/select '+filename), nil, SW_SHOW);
+  ShellExecute(Handle,pchar('open'), pchar('explorer.exe'), pchar('/select,'+filename), nil, SW_SHOW);
+end;
+
+procedure TfMain.N2Click(Sender: TObject);
+var
+  filename:string;
+begin
+  if listFile.Count=0 then exit;
+  if listFile.ItemIndex=-1 then  exit;
+  filename:=listFile.Items[listFile.ItemIndex];
+  ShellExecute(Handle,pchar('open'), pchar('explorer.exe'), pchar(filename), nil, SW_SHOW);
+
 end;
 
 procedure TfMain.LoadHTMLImagefile(filename:string);
@@ -187,6 +221,7 @@ procedure TfMain.FormShow(Sender: TObject);
 begin
   //fmain.Caption:=uConfig.APP_NAME+uConfig.APP_VERSION+uConfig.APP_CONTACT;
   fmain.Caption:=uConfig.APP_NAME+uConfig.APP_VERSION;
+  page1.ActivePage:=tsHtm;
 end;
 
 procedure TfMain.ListFileClick(Sender: TObject);
@@ -199,10 +234,15 @@ begin
   bar1.Panels[0].Text:=filename+'  size='+inttostr(filesize)+' 第'+inttostr(Listfile.ItemIndex)+'个';
   if(filesize=0)then exit;
   fileext:=extractfileext(filename);
-  if(fileext='.htm')or(fileext='.html')or(fileext='.txt')or(pos('.htm',filename)>0)then
+  if(fileext='.htm')or(fileext='.html')or(fileext='.txt')or(pos('.htm',filename)>0)
+  or(fileext='.log')then
   begin
     page1.ActivePage:=tsHtm;
     LoadHTMLfile(filename);
+    exit;
+  end;
+  if(fileext='.silk')then
+  begin
     exit;
   end;
   if(uFuncs.CheckImageType(filename)<>IT_None)then

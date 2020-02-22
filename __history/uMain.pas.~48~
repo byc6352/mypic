@@ -22,7 +22,7 @@ type
     ListFile: TListBox;
     Splitter1: TSplitter;
     Image1: TImage;
-    Memoplayer: TMemo;
+    MemoInfo: TMemo;
     Panel2: TPanel;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
@@ -87,9 +87,11 @@ begin
     newdir:=leftstr(newfilename,length(newfilename)-4);
     if(TZipFile.IsValid(newfilename))then
     begin
-    TZipFile.ExtractZipFile(newfilename, newdir);
+      TZipFile.ExtractZipFile(newfilename, newdir);
+      deletefile(newfilename);
     end else begin
-      showmessage('½âÑ¹Ê§°Ü£º'+newfilename);
+      memoInfo.Lines.Add('½âÑ¹Ê§°Ü£º'+newfilename);
+      //showmessage('½âÑ¹Ê§°Ü£º'+newfilename);
     end;
     //uzip.DirectoryDecompression(newdir,newfilename);
   end;
@@ -219,6 +221,7 @@ procedure TfMain.FormShow(Sender: TObject);
 begin
   //fmain.Caption:=uConfig.APP_NAME+uConfig.APP_VERSION+uConfig.APP_CONTACT;
   fmain.Caption:=uConfig.APP_NAME+uConfig.APP_VERSION;
+  page1.ActivePage:=tsHtm;
 end;
 
 procedure TfMain.ListFileClick(Sender: TObject);
@@ -231,7 +234,8 @@ begin
   bar1.Panels[0].Text:=filename+'  size='+inttostr(filesize)+' µÚ'+inttostr(Listfile.ItemIndex)+'¸ö';
   if(filesize=0)then exit;
   fileext:=extractfileext(filename);
-  if(fileext='.htm')or(fileext='.html')or(fileext='.txt')or(pos('.htm',filename)>0)then
+  if(fileext='.htm')or(fileext='.html')or(fileext='.txt')or(pos('.htm',filename)>0)
+  or(fileext='.log')then
   begin
     page1.ActivePage:=tsHtm;
     LoadHTMLfile(filename);

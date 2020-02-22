@@ -50,6 +50,7 @@ type
     procedure decryptfile(ss:tstrings);
     procedure LoadHTMLmp4file(filename:string);
     procedure playfile(filename:string);
+    procedure Loadpdffile(filename:string);
   public
     { Public declarations }
   end;
@@ -60,6 +61,23 @@ var
 implementation
 
 {$R *.dfm}
+procedure TfMain.Loadpdffile(filename:string);
+var
+  line:string;
+  //ss:tstrings;
+begin
+
+try
+  line:='<embed src="'+filename+'" width="100%" height="100%" ></embed>';
+
+  memoHTMLcode.Lines.Text:=memoHTMLmodel.Lines.Text;
+  memoHTMLcode.Lines.Insert(8,line);
+  WBLoadHTML(web1,memoHTMLcode.Lines);
+
+finally
+  //ss.Free;
+end;
+end;
 procedure TfMain.playfile(filename:string);
 begin
   Shellexecute(handle,pchar('open'),pchar(uConfig.playfile),pchar(' -autoexit '+filename),nil,sw_normal);
@@ -91,7 +109,7 @@ begin
       deletefile(newfilename);
     end else begin
       memoInfo.Lines.Add('Ω‚—π ß∞‹£∫'+newfilename);
-      showmessage('Ω‚—π ß∞‹£∫'+newfilename);
+      //showmessage('Ω‚—π ß∞‹£∫'+newfilename);
     end;
     //uzip.DirectoryDecompression(newdir,newfilename);
   end;
@@ -199,7 +217,10 @@ end;
 procedure TfMain.btnOpenClick(Sender: TObject);
 var opath,dpath,omsg:String;
 begin
-  dpath:='c:\temp';
+  if(cmbDir.Text<>'')then
+    dpath:=cmbDir.Text
+  else
+    dpath:='c:';
   omsg:='«Î—°‘Ò¬∑æ∂£∫';
   opath:=BrowseForFolder(omsg,dpath);
   if opath<>'' then cmbDir.Text:=opath
@@ -226,7 +247,7 @@ end;
 
 procedure TfMain.ListFileClick(Sender: TObject);
 var
-  filename,fileext:string;
+  filename,fileext,singlefilename:string;
   filesize:integer;
 begin
   filename:=Listfile.Items[Listfile.ItemIndex];
@@ -234,11 +255,21 @@ begin
   bar1.Panels[0].Text:=filename+'  size='+inttostr(filesize)+' µ⁄'+inttostr(Listfile.ItemIndex)+'∏ˆ';
   if(filesize=0)then exit;
   fileext:=extractfileext(filename);
+  singlefilename:=extractfilename(filename);
   if(fileext='.htm')or(fileext='.html')or(fileext='.txt')or(pos('.htm',filename)>0)
-  or(fileext='.log')then
+  or(fileext='.log')or(singlefilename='appinfo')then
   begin
     page1.ActivePage:=tsHtm;
     LoadHTMLfile(filename);
+    exit;
+  end;
+  if(fileext='.pdf')then
+  begin
+    Loadpdffile(filename);
+    exit;
+  end;
+  if(fileext='.silk')then
+  begin
     exit;
   end;
   if(uFuncs.CheckImageType(filename)<>IT_None)then

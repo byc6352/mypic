@@ -2,17 +2,17 @@
 <BorlandProject>
 	<Transactions>
     <Transaction>2020/02/06 09:30:51.000.014,=D:\works\delphi\Unit1.pas</Transaction>
-    <Transaction>2020/02/06 09:31:28.000.444,D:\works\delphi\Unit1.dfm=D:\works\delphi\mypic\uMain.dfm</Transaction>
-    <Transaction>2020/02/06 09:31:28.000.444,D:\works\delphi\Unit1.pas=D:\works\delphi\mypic\uMain.pas</Transaction>
-    <Transaction>2020/02/06 09:31:41.000.586,D:\works\delphi\Project1.dproj=D:\works\delphi\mypic\mypic.dproj</Transaction>
+    <Transaction>2020/02/06 09:31:28.000.444,D:\works\delphi\mypic\uMain.pas=D:\works\delphi\Unit1.pas</Transaction>
+    <Transaction>2020/02/06 09:31:28.000.444,D:\works\delphi\mypic\uMain.dfm=D:\works\delphi\Unit1.dfm</Transaction>
+    <Transaction>2020/02/06 09:31:41.000.586,D:\works\delphi\mypic\mypic.dproj=D:\works\delphi\Project1.dproj</Transaction>
     <Transaction>2020/02/06 09:37:25.000.999,=D:\works\delphi\mypic\Unit1.pas</Transaction>
-    <Transaction>2020/02/06 09:37:55.000.492,D:\works\delphi\mypic\Unit1.pas=D:\works\delphi\mypic\uConfig.pas</Transaction>
+    <Transaction>2020/02/06 09:37:55.000.492,D:\works\delphi\mypic\uConfig.pas=D:\works\delphi\mypic\Unit1.pas</Transaction>
     <Transaction>2020/02/06 09:37:59.000.879,=D:\works\delphi\mypic\Unit1.pas</Transaction>
-    <Transaction>2020/02/06 09:38:16.000.018,D:\works\delphi\mypic\Unit1.pas=D:\works\delphi\mypic\uLog.pas</Transaction>
+    <Transaction>2020/02/06 09:38:16.000.018,D:\works\delphi\mypic\uLog.pas=D:\works\delphi\mypic\Unit1.pas</Transaction>
     <Transaction>2020/02/06 09:45:38.000.502,=D:\works\delphi\mypic\Unit1.pas</Transaction>
-    <Transaction>2020/02/06 09:46:08.000.789,D:\works\delphi\mypic\Unit1.pas=D:\works\delphi\mypic\uBrowseForFolder.pas</Transaction>
+    <Transaction>2020/02/06 09:46:08.000.789,D:\works\delphi\mypic\uBrowseForFolder.pas=D:\works\delphi\mypic\Unit1.pas</Transaction>
     <Transaction>2020/02/06 09:49:15.000.872,=D:\works\delphi\mypic\Unit1.pas</Transaction>
-    <Transaction>2020/02/06 09:49:32.000.313,D:\works\delphi\mypic\Unit1.pas=D:\works\delphi\mypic\uFuncs.pas</Transaction>
+    <Transaction>2020/02/06 09:49:32.000.313,D:\works\delphi\mypic\uFuncs.pas=D:\works\delphi\mypic\Unit1.pas</Transaction>
     <Transaction>2020/02/10 01:15:32.000.277,=D:\works\delphi\mypic\uZip.pas</Transaction>
     <Transaction>2020/02/10 01:17:39.000.027,=D:\works\delphi\mypic\uDes2010.pas</Transaction>
   </Transactions>

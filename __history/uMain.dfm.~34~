@@ -2203,6 +2203,7 @@ object fMain: TfMain
     ActivePage = tsHtm
     Align = alClient
     TabOrder = 2
+    ExplicitLeft = 206
     object tspic: TTabSheet
       Caption = #22270#29255
       TabVisible = False
