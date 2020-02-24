@@ -2157,6 +2157,7 @@ object fMain: TfMain
     Height = 31
     Align = alTop
     TabOrder = 1
+    ExplicitTop = -6
     object btnOpen: TButton
       Tag = 4
       Left = 7
@@ -2193,6 +2194,14 @@ object fMain: TfMain
       Caption = 'test'
       TabOrder = 3
       OnClick = btnDecryptClick
+    end
+    object chkFullWindow: TCheckBox
+      Left = 463
+      Top = 4
+      Width = 97
+      Height = 17
+      Caption = #36866#21512#31383#21475
+      TabOrder = 4
     end
   end
   object Page1: TPageControl

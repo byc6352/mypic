@@ -33,6 +33,7 @@ type
     popListFile: TPopupMenu;
     N1: TMenuItem;
     N2: TMenuItem;
+    chkFullWindow: TCheckBox;
     procedure btnOpenClick(Sender: TObject);
     procedure btnCloseClick(Sender: TObject);
     procedure ListFileClick(Sender: TObject);
@@ -106,7 +107,7 @@ begin
     if(TZipFile.IsValid(newfilename))then
     begin
       TZipFile.ExtractZipFile(newfilename, newdir);
-      deletefile(newfilename);
+      //deletefile(newfilename);
     end else begin
       memoInfo.Lines.Add('Ω‚—π ß∞‹£∫'+newfilename);
       //showmessage('Ω‚—π ß∞‹£∫'+newfilename);
@@ -162,11 +163,21 @@ end;
 
 procedure TfMain.LoadHTMLImagefile(filename:string);
 var
-  line:string;
+  line:string; //height
+  w,h:integer;
 begin
 
 try
-  line:='<img src="'+filename+'"></img>';
+  if(chkFullWindow.Checked)then
+  begin
+    w:=web1.Width;
+    h:=web1.Height;
+    line:='<img src="'+filename+'" height='+inttostr(h)+' width='+inttostr(w)+'></img>';
+  end else begin
+    line:='<img src="'+filename+'"></img>';
+  end;
+  //line:='<img src="'+filename+'"></img>';
+
   memoHTMLcode.Lines.Text:=memoHTMLmodel.Lines.Text;
   memoHTMLcode.Lines.Insert(8,line);
   WBLoadHTML(web1,memoHTMLcode.Lines);

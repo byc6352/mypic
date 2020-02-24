@@ -77,7 +77,6 @@
         <AppDPIAwarenessMode>PerMonitorV2</AppDPIAwarenessMode>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <VerInfo_Locale>1033</VerInfo_Locale>
-        <AppExecutionLevel>requireAdministrator</AppExecutionLevel>
         <Icon_MainIcon>mypic_Icon.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>Win32\logview_256px_1174860_easyicon.net.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>Win32\logview_256px_1174860_easyicon.net.png</UWP_DelphiLogo150>
