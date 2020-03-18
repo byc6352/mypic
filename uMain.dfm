@@ -2156,8 +2156,7 @@ object fMain: TfMain
     Width = 866
     Height = 31
     Align = alTop
-    TabOrder = 1
-    ExplicitTop = -6
+    TabOrder = 2
     object btnOpen: TButton
       Tag = 4
       Left = 7
@@ -2211,7 +2210,7 @@ object fMain: TfMain
     Height = 553
     ActivePage = tsHtm
     Align = alClient
-    TabOrder = 2
+    TabOrder = 3
     object tspic: TTabSheet
       Caption = #22270#29255
       TabVisible = False
@@ -2337,7 +2336,8 @@ object fMain: TfMain
     Align = alLeft
     ItemHeight = 13
     PopupMenu = popListFile
-    TabOrder = 3
+    Sorted = True
+    TabOrder = 1
     OnClick = ListFileClick
   end
   object popListFile: TPopupMenu

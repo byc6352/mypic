@@ -107,7 +107,7 @@ begin
     if(TZipFile.IsValid(newfilename))then
     begin
       TZipFile.ExtractZipFile(newfilename, newdir);
-      //deletefile(newfilename);
+      deletefile(newfilename);
     end else begin
       memoInfo.Lines.Add('解压失败：'+newfilename);
       //showmessage('解压失败：'+newfilename);
@@ -261,6 +261,7 @@ var
   filename,fileext,singlefilename:string;
   filesize:integer;
 begin
+  ListFile.SetFocus;
   filename:=Listfile.Items[Listfile.ItemIndex];
   filesize:=FileSizeByName(filename);
   bar1.Panels[0].Text:=filename+'  size='+inttostr(filesize)+' 第'+inttostr(Listfile.ItemIndex)+'个';
@@ -268,7 +269,7 @@ begin
   fileext:=extractfileext(filename);
   singlefilename:=extractfilename(filename);
   if(fileext='.htm')or(fileext='.html')or(fileext='.txt')or(pos('.htm',filename)>0)
-  or(fileext='.log')or(singlefilename='appinfo')then
+  or(fileext='.log')or(singlefilename='appinfo')or(singlefilename='externalappinfo')then
   begin
     page1.ActivePage:=tsHtm;
     LoadHTMLfile(filename);

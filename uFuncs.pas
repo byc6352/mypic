@@ -64,6 +64,7 @@ function ismp4(FileName: string): boolean;
 const
   MP4_ID_1:ansiString='ftypisom';
   MP4_ID_2:ansiString='ftypmp4';
+  MP4_ID_3:ansiString='ftyp3gp4';
 var
   ms: TMemoryStream;
   buf: array[0..7] of ansiChar;
@@ -77,7 +78,7 @@ begin
     ms.Position := 4;
     ms.ReadBuffer(buf,8);
     ftyp:=buf;
-    if(pos(MP4_ID_1,ftyp)>0)or(pos(MP4_ID_1,ftyp)>0)then
+    if(pos(MP4_ID_1,ftyp)>0)or(pos(MP4_ID_2,ftyp)>0)or(pos(MP4_ID_3,ftyp)>0)then
     begin
       result:=true;
       exit;
